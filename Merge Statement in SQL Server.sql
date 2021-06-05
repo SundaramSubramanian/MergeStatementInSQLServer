@@ -7,8 +7,6 @@ CREATE TABLE Details.Products
 ) 
 GO
 
-
-
 --Insert records into target table
 INSERT INTO Details.Products
 VALUES
@@ -28,10 +26,10 @@ CREATE TABLE Details.SalesProducts
 ) 
 GO
 
-SELECT * FROM Details.Products
-SELECT * FROM Details.SalesProducts
+--- SELECT * FROM Details.Products
+--- SELECT * FROM Details.SalesProducts
 
----  Merge Statement 
+---  Merge Statement Begins 
 
 MERGE Details.SalesProducts AS T --- Target 
 	USING Details.Products AS S --- Source 
@@ -57,6 +55,9 @@ MERGE Details.SalesProducts AS T --- Target
 	)
 	WHEN NOT MATCHED BY SOURCE 
 	THEN DELETE;
+
+
+----- Merge Ends 
 
 
 
