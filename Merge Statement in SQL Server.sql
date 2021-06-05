@@ -31,5 +31,32 @@ GO
 SELECT * FROM Details.Products
 SELECT * FROM Details.SalesProducts
 
+---  Merge Statement 
+
+MERGE Details.SalesProducts AS T --- Target 
+	USING Details.Products AS S --- Source 
+	ON(T.ProductId=S.ProductId)
+	WHEN MATCHED AND 
+			T.ProductName<>S.ProductName OR 
+			T.Rate<>S.Rate
+	THEN UPDATE SET 
+			T.ProductName=S.ProductName, 
+			T.Rate=S.Rate
+	WHEN NOT MATCHED BY TARGET THEN 
+	INSERT 
+	(
+		ProductId,
+		ProductName,
+		Rate
+	)
+	VALUES
+	(
+		S.ProductId,
+		S.ProductName,
+		S.Rate
+	)
+	WHEN NOT MATCHED BY SOURCE 
+	THEN DELETE;
+
 
 
